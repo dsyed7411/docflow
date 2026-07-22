@@ -2,6 +2,10 @@
 
 > **Tagline**: Collaborative document workspace.
 
+🌐 **Live Demo:** https://docflow-orcin.vercel.app/login
+
+🚀 **Backend API:** https://docflow-1ndo.onrender.com/api
+
 DocFlow is a production-quality, lightweight SaaS productivity application inspired by Google Docs, Notion, and Dropbox Paper. Designed with a clean, minimal design aesthetic, responsive UI, secure JWT authentication, rich text editing with automatic background saving, file imports (.txt, .md, .docx), and document sharing.
 
 ---
@@ -65,32 +69,32 @@ The application automatically seeds two reviewer accounts at startup if they do 
 
 ## 📁 Repository Structure
 
-```
+```text
 c:\Users\DELL\Desktop\ajaia assignment\
 ├── backend/
 │   ├── src/main/java/com/docflow/
-│   │   ├── config/          # Security, CORS, and DataInitializer (seed data)
-│   │   ├── controller/      # REST API Controllers (Auth, Document, Profile)
-│   │   ├── dto/             # Data Transfer Objects
-│   │   ├── entity/          # JPA Entities (User, Document, DocumentShare)
-│   │   ├── exception/       # Global Exception Handler & Custom Exceptions
-│   │   ├── mapper/          # DTO Mappers
-│   │   ├── repository/      # Spring Data JPA Repositories
-│   │   ├── security/        # JWT Filter, Token Provider, UserDetails
-│   │   ├── service/         # Business Logic (Constructor Injection only)
+│   │   ├── config/
+│   │   ├── controller/
+│   │   ├── dto/
+│   │   ├── entity/
+│   │   ├── exception/
+│   │   ├── mapper/
+│   │   ├── repository/
+│   │   ├── security/
+│   │   ├── service/
 │   │   └── DocFlowApplication.java
-│   ├── src/main/resources/  # application.yml
-│   ├── src/test/java/       # Service Unit Tests (JUnit 5 & Mockito)
+│   ├── src/main/resources/
+│   ├── src/test/java/
 │   └── pom.xml
 ├── frontend/
 │   ├── src/
-│   │   ├── components/      # Navbar, Sidebar, Editor, Modals, Cards
-│   │   ├── contexts/        # AuthContext (JWT session state)
-│   │   ├── hooks/           # useAutosave, useAuth
-│   │   ├── pages/           # Login, Register, Dashboard, SharedWithMe, Editor, Profile
-│   │   ├── services/        # Axios API Client & Services
-│   │   ├── types/           # TypeScript Type Definitions
-│   │   ├── utils/           # Mammoth file parser & date formatters
+│   │   ├── components/
+│   │   ├── contexts/
+│   │   ├── hooks/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   ├── types/
+│   │   ├── utils/
 │   │   ├── App.tsx
 │   │   └── main.tsx
 │   ├── index.html
@@ -108,65 +112,113 @@ c:\Users\DELL\Desktop\ajaia assignment\
 ## 🛠️ Local Setup & Running
 
 ### Prerequisites
-- **Java 21 JDK** or newer
-- **Maven 3.9+** (or included Maven wrapper)
-- **Node.js 18+** & **pnpm / npm**
+
+- Java 21 JDK or newer
+- Maven 3.9+
+- Node.js 18+
+- pnpm / npm
 
 ### 1. Running the Backend
 
 ```bash
 cd backend
 
-# Environment variables (Optional for Supabase Postgres, defaults to H2 in-memory DB)
-# export SPRING_DATASOURCE_URL=jdbc:postgresql://<supabase-host>:5432/postgres
-# export SPRING_DATASOURCE_USERNAME=postgres
-# export SPRING_DATASOURCE_PASSWORD=your-supabase-password
-
-# Run unit tests
 mvn test
 
-# Start backend server
 mvn spring-boot:run
 ```
-*Backend runs at `http://localhost:8080`.*
+
+Backend runs at:
+
+```
+http://localhost:8080
+```
 
 ### 2. Running the Frontend
 
 ```bash
 cd frontend
 
-# Install dependencies
 pnpm install
 
-# Build production bundle / test types
 pnpm build
 
-# Start Vite development server
 pnpm dev
 ```
-*Frontend runs at `http://localhost:5173`.*
+
+Frontend runs at:
+
+```
+http://localhost:5173
+```
 
 ---
 
 ## 🚀 Deployment Instructions
 
+### 🌐 Live Application
+
+Frontend:
+
+**https://docflow-orcin.vercel.app/login**
+
+Backend API:
+
+**https://docflow-1ndo.onrender.com/api**
+
+---
+
 ### Frontend Deployment (Vercel)
+
 1. Push codebase to GitHub repository.
 2. Import project into Vercel dashboard and choose `frontend` as Root Directory.
-3. Build command: `pnpm build` (or `npm run build`), Output directory: `dist`.
-4. Add Environment Variable: `VITE_API_URL=https://<your-render-backend-url>.onrender.com/api`.
+3. Build command:
+
+```bash
+pnpm build
+```
+
+(or `npm run build`)
+
+Output directory:
+
+```
+dist
+```
+
+4. Environment Variable
+
+```
+VITE_API_URL=https://docflow-1ndo.onrender.com/api
+```
+
+---
 
 ### Backend Deployment (Render)
+
 1. Create new Web Service on Render pointing to `backend/`.
-2. Build command: `mvn clean package -DskipTests`.
-3. Start command: `java -jar target/docflow-backend-1.0.0.jar`.
+2. Build command:
+
+```bash
+mvn clean package -DskipTests
+```
+
+3. Start command:
+
+```bash
+java -jar target/docflow-backend-1.0.0.jar
+```
+
 4. Configure Environment Variables:
-   - `SPRING_DATASOURCE_URL`: `jdbc:postgresql://<supabase-db-host>:5432/postgres`
-   - `SPRING_DATASOURCE_USERNAME`: `<supabase-db-user>`
-   - `SPRING_DATASOURCE_PASSWORD`: `<supabase-db-password>`
-   - `SPRING_DATASOURCE_DRIVER_CLASS_NAME`: `org.postgresql.Driver`
-   - `JWT_SECRET`: `<your-random-64-character-secret>`
-   - `CORS_ALLOWED_ORIGINS`: `https://<your-vercel-app>.vercel.app`
+
+```
+SPRING_DATASOURCE_URL=<supabase-db-host>
+SPRING_DATASOURCE_USERNAME=<supabase-db-user>
+SPRING_DATASOURCE_PASSWORD=<supabase-db-password>
+SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
+JWT_SECRET=<your-random-secret>
+CORS_ALLOWED_ORIGINS=https://docflow-orcin.vercel.app
+```
 
 ---
 

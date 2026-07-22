@@ -13,14 +13,22 @@ import java.util.List;
 @Configuration
 public class CorsConfig {
 
-    @Value("${cors.allowed-origins:http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173}")
+    @Value("${cors.allowed-origins:*}")
     private String allowedOrigins;
 
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.setAllowedOriginPatterns(Arrays.asList(allowedOrigins.split(",")));
+
+        if ("*".equals(allowedOrigins.trim())) {
+            config.addAllowedOriginPattern("*");
+        } else {
+            for (String origin : allowedOrigins.split(",")) {
+                config.addAllowedOriginPattern(origin.trim());
+            }
+        }
+
         config.setAllowedHeaders(List.of("*"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         config.setExposedHeaders(List.of("Authorization"));

@@ -1,6 +1,13 @@
+const parseIsoDate = (dateString?: string): Date => {
+  if (!dateString) return new Date(NaN);
+  // If the server string doesn't end with 'Z' or a timezone offset (+/-), append 'Z' to parse as UTC
+  const hasTimezone = dateString.endsWith('Z') || /[+-]\d{2}:?\d{2}$/.test(dateString);
+  return new Date(hasTimezone ? dateString : `${dateString}Z`);
+};
+
 export const formatDate = (dateString?: string): string => {
   if (!dateString) return 'N/A';
-  const date = new Date(dateString);
+  const date = parseIsoDate(dateString);
   if (isNaN(date.getTime())) return 'Invalid date';
 
   return new Intl.DateTimeFormat('en-US', {
@@ -15,7 +22,7 @@ export const formatDate = (dateString?: string): string => {
 
 export const formatRelativeTime = (dateString?: string): string => {
   if (!dateString) return '';
-  const date = new Date(dateString);
+  const date = parseIsoDate(dateString);
   if (isNaN(date.getTime())) return '';
 
   const now = new Date();
